@@ -116,6 +116,58 @@
     </section>
   </main>
 
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>トロンボーンクイズ｜理解度チェック（全3問）</title>
+  <meta name="description" content="トロンボーン入門サイト（各部位・奏法・役割）をもとにした3問クイズ。スライド・種類・パーツの基礎を確認できます。">
+  <style>
+    :root { --w: 900px; --gap: 18px; --line:#e5e7eb; --muted:#475569; --brand:#2563eb; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.85;color:#0f172a;background:#fff}
+    header,main,footer{max-width:var(--w);margin:0 auto;padding:20px}
+    header{padding:36px 20px 8px;border-bottom:1px solid var(--line)}
+    h1{margin:0 0 6px;font-size:clamp(22px,3.2vw,32px)}
+    p.lead{color:var(--muted);margin:4px 0 10px}
+    a{color:var(--brand);text-underline-offset:3px}
+    .card{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+    .qno{display:inline-block;font-weight:700;background:#eff6ff;border:1px solid #dbeafe;border-radius:999px;padding:2px 10px;margin-bottom:8px}
+    .choices{display:grid;gap:10px}
+    .choices button{padding:10px 12px;border:1px solid #d1d5db;border-radius:10px;background:#fff;cursor:pointer;text-align:left}
+    .choices button[aria-pressed="true"]{outline:2px solid var(--brand);border-color:var(--brand)}
+    .nav{display:flex;gap:10px;margin-top:12px}
+    .nav button{padding:10px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#f8fafc;cursor:pointer}
+    .muted{color:var(--muted)}
+    .result{font-size:clamp(18px,2.4vw,22px);margin:8px 0}
+    .hidden{display:none}
+    footer{border-top:1px solid var(--line);margin-top:20px;padding-top:20px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>トロンボーンクイズ（全3問）</h1>
+    <p class="lead">参考：<a href="https://0218ta0313-art.github.io/trombone-site/" target="_blank" rel="noopener">トロンボーン入門｜各部位・奏法・役割</a> を読んでから挑戦！</p>
+  </header>
+
+  <main>
+    <!-- クイズ本体 -->
+    <section id="quiz" class="card" aria-live="polite">
+      <div id="qwrap"></div>
+      <div class="nav">
+        <button id="prev" type="button" aria-label="前の問題">← 前へ</button>
+        <button id="next" type="button" aria-label="次の問題">次へ →</button>
+        <button id="submit" type="button" class="hidden" aria-label="採点する">採点する</button>
+      </div>
+    </section>
+
+    <!-- 結果表示 -->
+    <section id="resultSec" class="card hidden">
+      <h2>結果</h2>
+      <p class="result" id="scoreTxt"></p>
+
+  
   <footer>
     <small class="muted">© 2025 Trombone Intro / 画像・素材の著作権にご注意ください。</small>
   </footer>
