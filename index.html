@@ -8,53 +8,60 @@
 <style>
   :root{
     --w:960px; --gap:18px;
-    --brand:#f97316;        /* オレンジ基調 */
-    --brand-2:#fb923c;      /* 明るいオレンジ */
-    --brand-3:#ffedd5;      /* 薄い背景 */
-    --ink:#3b2f2a;          /* 文字色(やや茶) */
-    --muted:#775a51;        /* サブ文字 */
-    --line:#ffd7b0;         /* 枠線 */
-    --surface:#fffaf6;      /* 面の色 */
+    --brand:#f97316;     /* 濃いオレンジ */
+    --brand-2:#fb923c;   /* 明るいオレンジ */
+    --ink:#3b2f2a;       /* 文字色(やや茶) */
+    --muted:#7a6159;     /* サブ文字 */
+    --line:#ffb86b;      /* 枠線オレンジ */
   }
   *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.85;color:var(--ink);background:var(--surface)}
+  body{
+    margin:0;
+    font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;
+    line-height:1.85; color:var(--ink);
+    /* ← 背景を“白寄りオレンジ”のグラデにして一気に雰囲気UP */
+    background:
+      radial-gradient(1200px 500px at 0% -10%, #fff7ed 0%, transparent 60%),
+      linear-gradient(180deg, #fff1e6 0%, #ffe4cc 50%, #ffe9d6 100%);
+  }
+
   header,main,footer{max-width:var(--w);margin:0 auto;padding:20px}
   header{
     padding:56px 20px 28px;
-    background: radial-gradient(1200px 400px at 10% -10%, #fff, transparent) ,
-                linear-gradient(180deg, #fff7ed 0%, #fff 50%, transparent 100%);
+    background:
+      linear-gradient(135deg, #ffe0c2 0%, #fff1e6 60%, #ffffff 100%);
     border-bottom:1px solid var(--line);
     border-bottom-left-radius:24px;border-bottom-right-radius:24px;
+    box-shadow:0 10px 24px rgba(249,115,22,.08);
   }
+
   h1{margin:0 0 8px;font-weight:800;letter-spacing:.3px}
   h2{margin:24px 0 8px;font-weight:800}
   .muted{color:var(--muted)}
-  .pill{
-    display:inline-block;padding:6px 12px;border-radius:999px;
-    border:1px solid var(--line);background:#fff7ed
-  }
+
   .toc{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
   .toc a{
-    border:1px solid var(--line);border-radius:999px;padding:8px 14px;
-    text-decoration:none;color:var(--ink);background:#fff;
-    box-shadow:0 1px 0 rgba(0,0,0,.04)
+    border:1px solid var(--line);border-radius:999px;padding:10px 14px;
+    text-decoration:none;color:var(--ink);
+    background:#fff8ef;                 /* ← タブの地色もオレンジ寄りに */
+    box-shadow:0 2px 0 rgba(0,0,0,.04)
   }
-  .toc a:hover{background:var(--brand-3);border-color:#ffc796}
+  .toc a:hover{background:#ffe9d6;border-color:#ffb26b}
+
   section{padding:28px 0;border-bottom:1px solid var(--line)}
   section:last-of-type{border-bottom:0}
-  .card{
-    border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff;
-    box-shadow:0 6px 16px rgba(249,115,22,.08)
-  }
-  .grid{display:grid;gap:var(--gap)}
-  @media(min-width:880px){ .cols-2{grid-template-columns:1.2fr 1fr} }
 
-  /* 表 */
+  .card{
+    border:1px solid var(--line);border-radius:16px;padding:16px;background:#ffffff;
+    box-shadow:0 8px 20px rgba(249,115,22,.08)
+  }
+
+  /* テーブル */
   table{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
   thead th{background:#fff3e6}
   th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}
 
-  /* クイズ（かわいめ） */
+  /* クイズ（オレンジ版） */
   .qno{display:inline-block;font-weight:700;background:#fff3e6;border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:8px}
   .choices{display:grid;gap:10px}
   .choices button{
@@ -63,19 +70,20 @@
   }
   .choices button:hover{background:#fff7ed}
   .choices button[aria-pressed="true"]{outline:2px solid var(--brand-2);border-color:var(--brand-2);background:#fff7ed}
+
   .nav{display:flex;gap:10px;margin-top:12px}
-  .btn{
+  .btn, .nav button{
     padding:10px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;
     box-shadow:0 2px 0 rgba(0,0,0,.03)
   }
-  .btn.primary{background:var(--brand);color:#fff;border-color:#f46c0e}
-  .btn.primary:hover{background:#fb7f22}
-  .btn:hover{background:#fff3e6}
-  .hidden{display:none}
+  .btn.primary, #submit{background:var(--brand);color:#fff;border-color:#f46c0e}
+  .btn.primary:hover, #submit:hover{background:#fb7f22}
+  .nav button:hover{background:#fff3e6}
 
-  /* フッター */
   footer{margin-top:20px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted)}
+  .hidden{display:none}
 </style>
+
 </head>
 <body>
   <header>
