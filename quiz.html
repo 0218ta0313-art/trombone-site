@@ -1,47 +1,177 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>トロンボーンクイズ（自作）</title>
-<style>
-  body{font-family:system-ui,"Noto Sans JP",sans-serif;line-height:1.8;margin:0}
-  main{max-width:720px;margin:0 auto;padding:20px}
-  .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px}
-  button{padding:10px 14px;border:1px solid #ccc;border-radius:8px;background:#fff;cursor:pointer}
-  .choices{display:flex;flex-direction:column;gap:8px}
-  .muted{color:#64748b}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>トロンボーンクイズ｜理解度チェック（全3問）</title>
+  <meta name="description" content="トロンボーン入門サイト（各部位・奏法・役割）をもとにした3問クイズ。スライド・種類・パーツの基礎を確認できます。">
+  <style>
+    :root { --w: 900px; --gap: 18px; --line:#e5e7eb; --muted:#475569; --brand:#2563eb; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.85;color:#0f172a;background:#fff}
+    header,main,footer{max-width:var(--w);margin:0 auto;padding:20px}
+    header{padding:36px 20px 8px;border-bottom:1px solid var(--line)}
+    h1{margin:0 0 6px;font-size:clamp(22px,3.2vw,32px)}
+    p.lead{color:var(--muted);margin:4px 0 10px}
+    a{color:var(--brand);text-underline-offset:3px}
+    .card{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+    .qno{display:inline-block;font-weight:700;background:#eff6ff;border:1px solid #dbeafe;border-radius:999px;padding:2px 10px;margin-bottom:8px}
+    .choices{display:grid;gap:10px}
+    .choices button{padding:10px 12px;border:1px solid #d1d5db;border-radius:10px;background:#fff;cursor:pointer;text-align:left}
+    .choices button[aria-pressed="true"]{outline:2px solid var(--brand);border-color:var(--brand)}
+    .nav{display:flex;gap:10px;margin-top:12px}
+    .nav button{padding:10px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#f8fafc;cursor:pointer}
+    .muted{color:var(--muted)}
+    .result{font-size:clamp(18px,2.4vw,22px);margin:8px 0}
+    .hidden{display:none}
+    footer{border-top:1px solid var(--line);margin-top:20px;padding-top:20px}
+  </style>
 </head>
 <body>
-<main>
-  <h1>トロンボーンクイズ</h1>
-  <p class="muted">全3問。終わったらスコアが表示されます。</p>
-  <div id="app" class="card"></div>
-  <p><a href="index.html">← トップへ戻る</a></p>
-</main>
+  <header>
+    <h1>トロンボーンクイズ（全3問）</h1>
+    <p class="lead">参考：<a href="https://0218ta0313-art.github.io/trombone-site/" target="_blank" rel="noopener">トロンボーン入門｜各部位・奏法・役割</a> を読んでから挑戦！</p>
+  </header>
 
-<script>
-const Q = [
-  {q:"音程を主に変える部分は？", a:["マウスピース","スライド","ベル","バルブ"], correct:1},
-  {q:"最も一般的な種類は？", a:["アルト","テナー","バス","ソプラノ"], correct:1},
-  {q:"ウォーターキーの目的は？", a:["音量調整","水分を抜く","装飾","チューニング"], correct:1}
-];
-let idx=0, score=0;
-const $=s=>document.querySelector(s), app=$("#app");
+  <main>
+    <!-- クイズ本体 -->
+    <section id="quiz" class="card" aria-live="polite">
+      <div id="qwrap"></div>
+      <div class="nav">
+        <button id="prev" type="button" aria-label="前の問題">← 前へ</button>
+        <button id="next" type="button" aria-label="次の問題">次へ →</button>
+        <button id="submit" type="button" class="hidden" aria-label="採点する">採点する</button>
+      </div>
+    </section>
 
-function render(){
-  app.innerHTML="";
-  if(idx>=Q.length){ app.innerHTML=`<h2>結果</h2><p>スコア：<strong>${score}/${Q.length}</strong></p>`; return; }
-  const d=document.createElement("div");
-  d.innerHTML=`<h2>Q${idx+1}. ${Q[idx].q}</h2>`;
-  const wrap=document.createElement("div"); wrap.className="choices";
-  Q[idx].a.forEach((t,i)=>{ const b=document.createElement("button"); b.textContent=t;
-    b.onclick=()=>{ if(i===Q[idx].correct) score++; idx++; render(); };
-    wrap.appendChild(b);
-  });
-  d.appendChild(wrap); app.appendChild(d);
-}
-render();
-</script>
+    <!-- 結果表示 -->
+    <section id="resultSec" class="card hidden">
+      <h2>結果</h2>
+      <p class="result" id="scoreTxt"></p>
+      <details>
+        <summary>解答と解説を表示</summary>
+        <ol id="review" style="margin-top:10px;"></ol>
+      </details>
+      <p style="margin-top:12px">
+        <a href="https://0218ta0313-art.github.io/trombone-site/" target="_blank" rel="noopener">解説サイトに戻る</a> /
+        <a href="#" id="retry">もう一度挑戦</a>
+      </p>
+    </section>
+
+    <!-- 出典メモ -->
+    <p class="muted">※問題は上記「トロンボーン入門」ページの内容（概要・各部位・種類）に基づいて作成しています。</p>
+  </main>
+
+  <footer>
+    <small class="muted">© 2025 Trombone Intro Quiz</small>
+  </footer>
+
+  <script>
+    // ===== 出題データ（サイト内容をもとに作成） =====
+    const QUIZ = [
+      {
+        q: "トロンボーンで音程を主に変える部分はどれ？",
+        choices: ["マウスピース", "スライド", "ベル（朝顔）", "ウォーターキー"],
+        correct: 1,
+        why: "トロンボーンはスライドを前後に動かして音程を変える金管楽器です。"
+      },
+      {
+        q: "最も一般的で“オールラウンダー”な種類はどれ？",
+        choices: ["アルト", "テナー", "バス", "ソプラノ"],
+        correct: 1,
+        why: "テナートロンボーンは吹奏楽・オーケストラ・ジャズなどで最も一般的に使われます。"
+      },
+      {
+        q: "ウォーターキー（唾抜き）の主な役割は？",
+        choices: ["音量の調整", "内部の水分を抜く", "チューニング", "装飾パーツ"],
+        correct: 1,
+        why: "演奏中に管内にたまる水分を排出するための部品がウォーターキーです。"
+      }
+    ];
+
+    // ===== 状態管理 =====
+    let idx = 0;                             // 現在の問題番号
+    const userAns = Array(QUIZ.length).fill(null);  // 回答の記録
+
+    // ===== 要素取得 =====
+    const qwrap = document.getElementById('qwrap');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const submitBtn = document.getElementById('submit');
+    const resultSec = document.getElementById('resultSec');
+    const scoreTxt = document.getElementById('scoreTxt');
+    const review = document.getElementById('review');
+    const retry = document.getElementById('retry');
+
+    // ===== 画面描画 =====
+    function render() {
+      const data = QUIZ[idx];
+      qwrap.innerHTML = `
+        <span class="qno">Q${idx+1}/${QUIZ.length}</span>
+        <h2 style="margin:6px 0 10px">${data.q}</h2>
+        <div class="choices" role="group" aria-label="選択肢">
+          ${data.choices.map((t,i)=>`
+            <button type="button" data-i="${i}" aria-pressed="${userAns[idx]===i}">
+              ${t}
+            </button>
+          `).join('')}
+        </div>
+      `;
+
+      // 選択肢ハンドラ
+      qwrap.querySelectorAll('button[data-i]').forEach(btn=>{
+        btn.addEventListener('click', () => {
+          userAns[idx] = Number(btn.dataset.i);
+          // aria-pressed 更新
+          qwrap.querySelectorAll('button[data-i]').forEach(b=>b.setAttribute('aria-pressed','false'));
+          btn.setAttribute('aria-pressed','true');
+          // 自動で次の問題へ（最終問以外）
+          if (idx < QUIZ.length - 1) { idx++; updateNav(); render(); }
+          else { updateNav(); }
+        });
+      });
+
+      updateNav();
+    }
+
+    function updateNav(){
+      prevBtn.disabled = (idx === 0);
+      nextBtn.classList.toggle('hidden', idx >= QUIZ.length - 1);
+      submitBtn.classList.toggle('hidden', idx < QUIZ.length - 1);
+    }
+
+    // ===== 採点 =====
+    function grade(){
+      let score = 0;
+      review.innerHTML = "";
+      QUIZ.forEach((q, i) => {
+        const ok = userAns[i] === q.correct;
+        if (ok) score++;
+        const li = document.createElement('li');
+        const ua = userAns[i] != null ? q.choices[userAns[i]] : "未回答";
+        li.innerHTML = `
+          <p><strong>Q${i+1}.</strong> ${q.q}</p>
+          <p>あなたの答え：${ua}<br>
+          正解：<strong>${q.choices[q.correct]}</strong></p>
+          <p class="muted">解説：${q.why}</p>
+        `;
+        review.appendChild(li);
+      });
+      scoreTxt.textContent = `スコア：${score} / ${QUIZ.length}`;
+      resultSec.classList.remove('hidden');
+      document.getElementById('quiz').classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===== イベント =====
+    prevBtn.addEventListener('click', ()=>{ if(idx>0){ idx--; render(); }});
+    nextBtn.addEventListener('click', ()=>{ if(idx<QUIZ.length-1){ idx++; render(); }});
+    submitBtn.addEventListener('click', grade);
+    retry.addEventListener('click', (e)=>{ e.preventDefault(); idx=0; userAns.fill(null);
+      resultSec.classList.add('hidden'); document.getElementById('quiz').classList.remove('hidden'); render(); });
+
+    // 初期描画
+    render();
+  </script>
 </body>
 </html>
