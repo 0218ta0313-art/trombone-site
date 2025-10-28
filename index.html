@@ -6,13 +6,14 @@
   <title>トロンボーン入門｜各部位・奏法・ジャンル別の役割</title>
   <meta name="description" content="トロンボーンの概要、各部位、種類、音の出し方・姿勢、ジャンル別の役割をやさしく解説。">
   <style>
-    :root { --w: 960px; --gap: 18px; --line:#e5e7eb; --muted:#475569; }
+    :root { --w: 960px; --gap: 18px; --line:#e5e7eb; --muted:#475569; --brand:#2563eb; }
     body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.8}
     header,main,footer{max-width:var(--w);margin:0 auto;padding:20px}
     header{padding:48px 20px;border-bottom:1px solid var(--line)}
     h1{margin:0 0 8px} h2{margin:24px 0 8px}
     img{max-width:100%;height:auto;border-radius:8px}
-    .muted{color:var(--muted)} .card{border:1px solid var(--line);border-radius:12px;padding:16px}
+    .muted{color:var(--muted)}
+    .card{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff}
     .toc{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
     .toc a{border:1px solid var(--line);border-radius:999px;padding:6px 10px;text-decoration:none;color:inherit}
     section{padding:24px 0;border-bottom:1px solid var(--line)} section:last-of-type{border:0}
@@ -20,6 +21,15 @@
     table{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:10px;overflow:hidden}
     th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}
     thead th{background:#f8fafc}
+
+    /* ▼ クイズ用の最小スタイルを追加 */
+    .qno{display:inline-block;font-weight:700;background:#eff6ff;border:1px solid #dbeafe;border-radius:999px;padding:2px 10px;margin-bottom:8px}
+    .choices{display:grid;gap:10px}
+    .choices button{padding:10px 12px;border:1px solid #d1d5db;border-radius:10px;background:#fff;cursor:pointer;text-align:left}
+    .choices button[aria-pressed="true"]{outline:2px solid var(--brand);border-color:var(--brand)}
+    .nav{display:flex;gap:10px;margin-top:12px}
+    .nav button{padding:10px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#f8fafc;cursor:pointer}
+    .hidden{display:none}
   </style>
 </head>
 <body>
@@ -32,6 +42,8 @@
       <a href="#types">種類</a>
       <a href="#technique">音の出し方・姿勢</a>
       <a href="#roles">ジャンル別の役割</a>
+      <!-- ▼ クイズへのアンカーを追加 -->
+      <a href="#quiz">クイズ</a>
     </nav>
   </header>
 
@@ -114,10 +126,77 @@
         </div>
       </div>
     </section>
+
+    <!-- ▼ クイズ（同一ページ内に設置） -->
+    <section id="quiz">
+      <h2>トロンボーンクイズ（全3問）</h2>
+      <p class="muted">下の選択肢をクリックして進みます。最後にスコアと解説が表示されます。</p>
+
+      <!-- クイズ本体 -->
+      <div id="quizBox" class="card" aria-live="polite">
+        <div id="qwrap"></div>
+        <div class="nav">
+          <button id="prev" type="button" aria-label="前の問題">← 前へ</button>
+          <button id="next" type="button" aria-label="次の問題">次へ →</button>
+          <button id="submit" type="button" class="hidden" aria-label="採点する">採点する</button>
+        </div>
+      </div>
+
+      <!-- 結果表示 -->
+      <div id="resultSec" class="card hidden">
+        <h3>結果</h3>
+        <p id="scoreTxt" style="font-size:1.1rem;margin:8px 0;"></p>
+        <details>
+          <summary>解答と解説を表示</summary>
+          <ol id="review" style="margin-top:10px;"></ol>
+        </details>
+        <p style="margin-top:12px">
+          <a href="#about">↑ 解説ページの冒頭へ戻る</a> /
+          <a href="#" id="retry">もう一度挑戦</a>
+        </p>
+      </div>
+    </section>
+    <!-- ▲ クイズここまで ▲ -->
   </main>
 
   <footer>
     <small class="muted">© 2025 Trombone Intro / 画像・素材の著作権にご注意ください。</small>
   </footer>
-</body>
-</html>
+
+  <!-- ▼ クイズ用スクリプト（自作3問） -->
+  <script>
+    const QUIZ = [
+      {
+        q: "トロンボーンで音程を主に変える部分はどれ？",
+        choices: ["マウスピース", "スライド", "ベル（朝顔）", "ウォーターキー"],
+        correct: 1,
+        why: "トロンボーンはスライドを前後に動かして音程を変える金管楽器です。"
+      },
+      {
+        q: "最も一般的で“オールラウンダー”な種類はどれ？",
+        choices: ["アルト", "テナー", "バス", "ソプラノ"],
+        correct: 1,
+        why: "テナートロンボーンは吹奏楽・オーケストラ・ジャズで広く使われます。"
+      },
+      {
+        q: "ウォーターキー（唾抜き）の主な役割は？",
+        choices: ["音量の調整", "内部の水分を抜く", "チューニング", "装飾パーツ"],
+        correct: 1,
+        why: "演奏中に管内にたまる水分を排出するための部品がウォーターキーです。"
+      }
+    ];
+
+    let idx = 0;
+    const userAns = Array(QUIZ.length).fill(null);
+
+    const qwrap = document.getElementById('qwrap');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const submitBtn = document.getElementById('submit');
+    const resultSec = document.getElementById('resultSec');
+    const scoreTxt = document.getElementById('scoreTxt');
+    const review = document.getElementById('review');
+    const retry = document.getElementById('retry');
+    const quizBox = document.getElementById('quizBox');
+
+    function re
