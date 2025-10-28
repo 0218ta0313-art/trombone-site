@@ -1,36 +1,38 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>トロンボーン入門｜各部位・奏法・ジャンル別の役割</title>
-  <meta name="description" content="トロンボーンの概要、各部位、種類、音の出し方・姿勢、ジャンル別の役割をやさしく解説。クイズで理解度チェックもできます。">
-  <style>
-    :root { --w: 960px; --gap: 18px; --line:#e5e7eb; --muted:#475569; --brand:#2563eb; }
-    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.8}
-    header,main,footer{max-width:var(--w);margin:0 auto;padding:20px}
-    header{padding:48px 20px;border-bottom:1px solid var(--line)}
-    h1{margin:0 0 8px} h2{margin:24px 0 8px}
-    img{max-width:100%;height:auto;border-radius:8px}
-    .muted{color:var(--muted)}
-    .card{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff}
-    .toc{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-    .toc a{border:1px solid var(--line);border-radius:999px;padding:6px 10px;text-decoration:none;color:inherit}
-    section{padding:24px 0;border-bottom:1px solid var(--line)} section:last-of-type{border:0}
-    .grid{display:grid;gap:var(--gap)} @media(min-width:840px){.cols-2{grid-template-columns:1.2fr 1fr}}
-    table{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-    th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}
-    thead th{background:#f8fafc}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>トロンボーン入門｜各部位・奏法・役割＋クイズ</title>
+<meta name="description" content="トロンボーンの概要・各部位・種類・姿勢・ジャンル別の役割をやさしく解説。3問クイズで理解度チェックもできます。">
+<style>
+  :root{--w:960px;--gap:18px;--line:#e5e7eb;--muted:#475569;--brand:#2563eb}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.85;color:#0f172a;background:#fff}
+  header,main,footer{max-width:var(--w);margin:0 auto;padding:20px}
+  header{padding:48px 20px;border-bottom:1px solid var(--line)}
+  h1{margin:0 0 6px} h2{margin:24px 0 8px}
+  img{max-width:100%;height:auto;border-radius:8px}
+  .muted{color:var(--muted)}
+  .card{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff}
+  .toc{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .toc a{border:1px solid var(--line);border-radius:999px;padding:6px 10px;text-decoration:none;color:inherit}
+  section{padding:24px 0;border-bottom:1px solid var(--line)} section:last-of-type{border:0}
+  .grid{display:grid;gap:var(--gap)} @media(min-width:840px){.cols-2{grid-template-columns:1.2fr 1fr}}
 
-    /* ▼ クイズ用の最小スタイル */
-    .qno{display:inline-block;font-weight:700;background:#eff6ff;border:1px solid #dbeafe;border-radius:999px;padding:2px 10px;margin-bottom:8px}
-    .choices{display:grid;gap:10px}
-    .choices button{padding:10px 12px;border:1px solid #d1d5db;border-radius:10px;background:#fff;cursor:pointer;text-align:left}
-    .choices button[aria-pressed="true"]{outline:2px solid var(--brand);border-color:var(--brand)}
-    .nav{display:flex;gap:10px;margin-top:12px}
-    .nav button{padding:10px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#f8fafc;cursor:pointer}
-    .hidden{display:none}
-  </style>
+  table{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}
+  thead th{background:#f8fafc}
+
+  /* クイズ用 */
+  .qno{display:inline-block;font-weight:700;background:#eff6ff;border:1px solid #dbeafe;border-radius:999px;padding:2px 10px;margin-bottom:8px}
+  .choices{display:grid;gap:10px}
+  .choices button{padding:10px 12px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;cursor:pointer;text-align:left}
+  .choices button[aria-pressed="true"]{outline:2px solid var(--brand);border-color:var(--brand)}
+  .nav{display:flex;gap:10px;margin-top:12px}
+  .nav button{padding:10px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#f8fafc;cursor:pointer}
+  .hidden{display:none}
+</style>
 </head>
 <body>
   <header>
@@ -42,12 +44,12 @@
       <a href="#types">種類</a>
       <a href="#technique">音の出し方・姿勢</a>
       <a href="#roles">ジャンル別の役割</a>
-      <!-- ▼ クイズへのアンカー -->
       <a href="#quiz">クイズ</a>
     </nav>
   </header>
 
   <main>
+    <!-- 概要 -->
     <section id="about">
       <h2>トロンボーンとは？（概要・魅力）</h2>
       <div class="grid cols-2">
@@ -61,11 +63,12 @@
         </div>
         <figure class="card">
           <img src="images/trombone.jpg" alt="テナートロンボーンの写真">
-          <figcaption class="muted">※画像はお手元の写真に差し替えてください。</figcaption>
+          <figcaption class="muted">※画像はお手元の写真に差し替えてください（images/trombone.jpg）。</figcaption>
         </figure>
       </div>
     </section>
 
+    <!-- 各部位 -->
     <section id="parts">
       <h2>仕組みと各部位（図解／名称）</h2>
       <div class="grid cols-2">
@@ -87,6 +90,7 @@
       </div>
     </section>
 
+    <!-- 種類 -->
     <section id="types">
       <h2>種類（アルト／テナー／バス）</h2>
       <table>
@@ -99,6 +103,7 @@
       </table>
     </section>
 
+    <!-- 奏法 -->
     <section id="technique">
       <h2>音の出し方・姿勢（アンブシュア／呼吸／スライド）</h2>
       <ul>
@@ -109,6 +114,7 @@
       </ul>
     </section>
 
+    <!-- 役割 -->
     <section id="roles">
       <h2>役割とジャンル別の使われ方（吹奏楽／オケ／ジャズ）</h2>
       <div class="grid" style="grid-template-columns:1fr;gap:16px">
@@ -127,7 +133,7 @@
       </div>
     </section>
 
-    <!-- ▼ クイズ（同一ページ内に設置） -->
+    <!-- クイズ -->
     <section id="quiz">
       <h2>トロンボーンクイズ（全3問）</h2>
       <p class="muted">選択肢をクリックして進みます。最後にスコアと解説が表示されます。</p>
@@ -151,94 +157,92 @@
           <ol id="review" style="margin-top:10px;"></ol>
         </details>
         <p style="margin-top:12px">
-          <a href="#about">↑ 冒頭に戻る</a> /
+          <a href="#about">↑ 冒頭へ戻る</a> /
           <a href="#" id="retry">もう一度挑戦</a>
         </p>
       </div>
     </section>
-    <!-- ▲ クイズここまで ▲ -->
   </main>
 
   <footer>
     <small class="muted">© 2025 Trombone Intro / 画像・素材の著作権にご注意ください。</small>
   </footer>
 
-  <!-- ▼ クイズ用スクリプト（必ず </body> の直前） -->
+  <!-- クイズ用スクリプト（必ず </body> の直前） -->
   <script>
-    document.addEventListener('DOMContentLoaded', function(){
-      const QUIZ = [
-        { q:"トロンボーンで音程を主に変える部分はどれ？",
-          choices:["マウスピース","スライド","ベル（朝顔）","ウォーターキー"],
-          correct:1, why:"トロンボーンはスライドを前後に動かして音程を変えます。" },
-        { q:"最も一般的で“オールラウンダー”な種類はどれ？",
-          choices:["アルト","テナー","バス","ソプラノ"],
-          correct:1, why:"テナートロンボーンは吹奏楽・オーケストラ・ジャズで広く使われます。" },
-        { q:"ウォーターキー（唾抜き）の主な役割は？",
-          choices:["音量の調整","内部の水分を抜く","チューニング","装飾パーツ"],
-          correct:1, why:"演奏中に管内にたまる水分を排出するための部品です。" }
-      ];
+  document.addEventListener('DOMContentLoaded', function(){
+    const QUIZ = [
+      { q:"トロンボーンで音程を主に変える部分はどれ？",
+        choices:["マウスピース","スライド","ベル（朝顔）","ウォーターキー"],
+        correct:1, why:"トロンボーンはスライドを前後に動かして音程を変えます。" },
+      { q:"最も一般的で“オールラウンダー”な種類はどれ？",
+        choices:["アルト","テナー","バス","ソプラノ"],
+        correct:1, why:"テナートロンボーンは吹奏楽・オーケストラ・ジャズで広く使われます。" },
+      { q:"ウォーターキー（唾抜き）の主な役割は？",
+        choices:["音量の調整","内部の水分を抜く","チューニング","装飾パーツ"],
+        correct:1, why:"演奏中に管内にたまる水分を排出するための部品です。" }
+    ];
 
-      let idx=0, userAns=Array(QUIZ.length).fill(null);
-      const qwrap=document.getElementById('qwrap'),
-            prevBtn=document.getElementById('prev'),
-            nextBtn=document.getElementById('next'),
-            submitBtn=document.getElementById('submit'),
-            resultSec=document.getElementById('resultSec'),
-            scoreTxt=document.getElementById('scoreTxt'),
-            review=document.getElementById('review'),
-            quizBox=document.getElementById('quizBox');
+    let idx=0, userAns=Array(QUIZ.length).fill(null);
+    const qwrap=document.getElementById('qwrap'),
+          prevBtn=document.getElementById('prev'),
+          nextBtn=document.getElementById('next'),
+          submitBtn=document.getElementById('submit'),
+          resultSec=document.getElementById('resultSec'),
+          scoreTxt=document.getElementById('scoreTxt'),
+          review=document.getElementById('review'),
+          quizBox=document.getElementById('quizBox');
 
-      function updateNav(){
-        prevBtn.disabled = (idx===0);
-        nextBtn.classList.toggle('hidden', idx>=QUIZ.length-1);
-        submitBtn.classList.toggle('hidden', idx<QUIZ.length-1);
-      }
-      function render(){
-        const d=QUIZ[idx];
-        qwrap.innerHTML = `
-          <span class="qno">Q${idx+1}/${QUIZ.length}</span>
-          <h3 style="margin:6px 0 10px">${d.q}</h3>
-          <div class="choices" role="group" aria-label="選択肢">
-            ${d.choices.map((t,i)=>`<button type="button" data-i="${i}" aria-pressed="${userAns[idx]===i}">${t}</button>`).join('')}
-          </div>`;
-        qwrap.querySelectorAll('button[data-i]').forEach(btn=>{
-          btn.addEventListener('click', ()=>{
-            userAns[idx]=Number(btn.dataset.i);
-            qwrap.querySelectorAll('button[data-i]').forEach(b=>b.setAttribute('aria-pressed','false'));
-            btn.setAttribute('aria-pressed','true');
-            if(idx<QUIZ.length-1){ idx++; updateNav(); render(); } else { updateNav(); }
-          });
+    function updateNav(){
+      prevBtn.disabled = (idx===0);
+      nextBtn.classList.toggle('hidden', idx>=QUIZ.length-1);
+      submitBtn.classList.toggle('hidden', idx<QUIZ.length-1);
+    }
+    function render(){
+      const d=QUIZ[idx];
+      qwrap.innerHTML = `
+        <span class="qno">Q${idx+1}/${QUIZ.length}</span>
+        <h3 style="margin:6px 0 10px">${d.q}</h3>
+        <div class="choices" role="group" aria-label="選択肢">
+          ${d.choices.map((t,i)=>`<button type="button" data-i="${i}" aria-pressed="${userAns[idx]===i}">${t}</button>`).join('')}
+        </div>`;
+      qwrap.querySelectorAll('button[data-i]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          userAns[idx]=Number(btn.dataset.i);
+          qwrap.querySelectorAll('button[data-i]').forEach(b=>b.setAttribute('aria-pressed','false'));
+          btn.setAttribute('aria-pressed','true');
+          if(idx<QUIZ.length-1){ idx++; updateNav(); render(); } else { updateNav(); }
         });
-        updateNav();
-      }
-      function grade(){
-        let score=0; review.innerHTML="";
-        QUIZ.forEach((q,i)=>{
-          const ok = userAns[i]===q.correct; if(ok) score++;
-          const li=document.createElement('li');
-          const ua = userAns[i]!=null ? q.choices[userAns[i]] : "未回答";
-          li.innerHTML = `<p><strong>Q${i+1}.</strong> ${q.q}</p>
-                          <p>あなたの答え：${ua}<br>正解：<strong>${q.choices[q.correct]}</strong></p>
-                          <p class="muted">解説：${q.why}</p>`;
-          review.appendChild(li);
-        });
-        scoreTxt.textContent = `スコア：${score} / ${QUIZ.length}`;
-        resultSec.classList.remove('hidden');
-        quizBox.classList.add('hidden');
-        window.scrollTo({ top: quizBox.offsetTop - 40, behavior:'smooth' });
-      }
-
-      prevBtn.addEventListener('click', ()=>{ if(idx>0){ idx--; render(); }});
-      nextBtn.addEventListener('click', ()=>{ if(idx<QUIZ.length-1){ idx++; render(); }});
-      submitBtn.addEventListener('click', grade);
-      document.getElementById('retry').addEventListener('click', (e)=>{
-        e.preventDefault(); idx=0; userAns.fill(null);
-        resultSec.classList.add('hidden'); quizBox.classList.remove('hidden'); render();
       });
+      updateNav();
+    }
+    function grade(){
+      let score=0; review.innerHTML="";
+      QUIZ.forEach((q,i)=>{
+        const ok = userAns[i]===q.correct; if(ok) score++;
+        const li=document.createElement('li');
+        const ua = userAns[i]!=null ? q.choices[userAns[i]] : "未回答";
+        li.innerHTML = `<p><strong>Q${i+1}.</strong> ${q.q}</p>
+                        <p>あなたの答え：${ua}<br>正解：<strong>${q.choices[q.correct]}</strong></p>
+                        <p class="muted">解説：${q.why}</p>`;
+        review.appendChild(li);
+      });
+      scoreTxt.textContent = `スコア：${score} / ${QUIZ.length}`;
+      resultSec.classList.remove('hidden');
+      quizBox.classList.add('hidden');
+      window.scrollTo({ top: quizBox.offsetTop - 40, behavior:'smooth' });
+    }
 
-      render();
+    prevBtn.addEventListener('click', ()=>{ if(idx>0){ idx--; render(); }});
+    nextBtn.addEventListener('click', ()=>{ if(idx<QUIZ.length-1){ idx++; render(); }});
+    submitBtn.addEventListener('click', grade);
+    document.getElementById('retry').addEventListener('click', (e)=>{
+      e.preventDefault(); idx=0; userAns.fill(null);
+      resultSec.classList.add('hidden'); quizBox.classList.remove('hidden'); render();
     });
+
+    render();
+  });
   </script>
-  <!-- ▲ スクリプトここまで ▲ -->
 </body>
 </html>
