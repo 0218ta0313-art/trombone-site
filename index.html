@@ -127,6 +127,114 @@
       </div>
     </section>
 
+<!-- ▼ クイズ（同一ページ内に設置） -->
+<section id="quiz">
+  <h2>トロンボーンクイズ（全3問）</h2>
+  <p class="muted">選択肢をクリックして進みます。最後にスコアと解説が表示されます。</p>
+
+  <div id="quizBox" class="card" aria-live="polite">
+    <div id="qwrap"></div>
+    <div class="nav">
+      <button id="prev" type="button" aria-label="前の問題">← 前へ</button>
+      <button id="next" type="button" aria-label="次の問題">次へ →</button>
+      <button id="submit" type="button" class="hidden" aria-label="採点する">採点する</button>
+    </div>
+  </div>
+
+  <div id="resultSec" class="card hidden">
+    <h3>結果</h3>
+    <p id="scoreTxt" style="font-size:1.1rem;margin:8px 0;"></p>
+    <details>
+      <summary>解答と解説を表示</summary>
+      <ol id="review" style="margin-top:10px;"></ol>
+    </details>
+    <p style="margin-top:12px">
+      <a href="#about">↑ 冒頭に戻る</a> /
+      <a href="#" id="retry">もう一度挑戦</a>
+    </p>
+  </div>
+</section>
+<!-- ▲ クイズここまで ▲ -->
+
+<!-- ▼ クイズ用スクリプト（必ず </body> より前） -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const QUIZ = [
+    { q:"トロンボーンで音程を主に変える部分はどれ？",
+      choices:["マウスピース","スライド","ベル（朝顔）","ウォーターキー"],
+      correct:1, why:"スライドを前後に動かして音程を変えます。" },
+    { q:"最も一般的で“オールラウンダー”な種類はどれ？",
+      choices:["アルト","テナー","バス","ソプラノ"],
+      correct:1, why:"テナートロンボーンは吹奏楽・オケ・ジャズで広く使われます。" },
+    { q:"ウォーターキー（唾抜き）の主な役割は？",
+      choices:["音量の調整","内部の水分を抜く","チューニング","装飾パーツ"],
+      correct:1, why:"演奏中に管内にたまる水分を排出します。" }
+  ];
+
+  let idx=0, userAns=Array(QUIZ.length).fill(null);
+  const qwrap=document.getElementById('qwrap'),
+        prevBtn=document.getElementById('prev'),
+        nextBtn=document.getElementById('next'),
+        submitBtn=document.getElementById('submit'),
+        resultSec=document.getElementById('resultSec'),
+        scoreTxt=document.getElementById('scoreTxt'),
+        review=document.getElementById('review'),
+        quizBox=document.getElementById('quizBox');
+
+  function updateNav(){
+    prevBtn.disabled = (idx===0);
+    nextBtn.classList.toggle('hidden', idx>=QUIZ.length-1);
+    submitBtn.classList.toggle('hidden', idx<QUIZ.length-1);
+  }
+  function render(){
+    const d=QUIZ[idx];
+    qwrap.innerHTML = `
+      <span class="qno">Q${idx+1}/${QUIZ.length}</span>
+      <h3 style="margin:6px 0 10px">${d.q}</h3>
+      <div class="choices" role="group" aria-label="選択肢">
+        ${d.choices.map((t,i)=>`<button type="button" data-i="${i}" aria-pressed="${userAns[idx]===i}">${t}</button>`).join('')}
+      </div>`;
+    qwrap.querySelectorAll('button[data-i]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        userAns[idx]=Number(btn.dataset.i);
+        qwrap.querySelectorAll('button[data-i]').forEach(b=>b.setAttribute('aria-pressed','false'));
+        btn.setAttribute('aria-pressed','true');
+        if(idx<QUIZ.length-1){ idx++; updateNav(); render(); } else { updateNav(); }
+      });
+    });
+    updateNav();
+  }
+  function grade(){
+    let score=0; review.innerHTML="";
+    QUIZ.forEach((q,i)=>{
+      const ok = userAns[i]===q.correct; if(ok) score++;
+      const li=document.createElement('li');
+      const ua = userAns[i]!=null ? q.choices[userAns[i]] : "未回答";
+      li.innerHTML = `<p><strong>Q${i+1}.</strong> ${q.q}</p>
+                      <p>あなたの答え：${ua}<br>正解：<strong>${q.choices[q.correct]}</strong></p>
+                      <p class="muted">解説：${q.why}</p>`;
+      review.appendChild(li);
+    });
+    scoreTxt.textContent = `スコア：${score} / ${QUIZ.length}`;
+    resultSec.classList.remove('hidden');
+    quizBox.classList.add('hidden');
+    window.scrollTo({ top: quizBox.offsetTop - 40, behavior:'smooth' });
+  }
+
+  prevBtn.addEventListener('click', ()=>{ if(idx>0){ idx--; render(); }});
+  nextBtn.addEventListener('click', ()=>{ if(idx<QUIZ.length-1){ idx++; render(); }});
+  submitBtn.addEventListener('click', grade);
+  document.getElementById('retry').addEventListener('click', (e)=>{
+    e.preventDefault(); idx=0; userAns.fill(null);
+    resultSec.classList.add('hidden'); quizBox.classList.remove('hidden'); render();
+  });
+
+  render();
+});
+</script>
+<!-- ▲ スクリプトここまで ▲ -->
+
+    
     <!-- ▼ クイズ（同一ページ内に設置） -->
     <section id="quiz">
       <h2>トロンボーンクイズ（全3問）</h2>
