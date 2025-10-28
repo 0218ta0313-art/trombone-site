@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>トロンボーンクイズ（自作）</title>
+<style>
+  body{font-family:system-ui,"Noto Sans JP",sans-serif;line-height:1.8;margin:0}
+  main{max-width:720px;margin:0 auto;padding:20px}
+  .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px}
+  button{padding:10px 14px;border:1px solid #ccc;border-radius:8px;background:#fff;cursor:pointer}
+  .choices{display:flex;flex-direction:column;gap:8px}
+  .muted{color:#64748b}
+</style>
+</head>
+<body>
+<main>
+  <h1>トロンボーンクイズ</h1>
+  <p class="muted">全3問。終わったらスコアが表示されます。</p>
+  <div id="app" class="card"></div>
+  <p><a href="index.html">← トップへ戻る</a></p>
+</main>
+
+<script>
+const Q = [
+  {q:"音程を主に変える部分は？", a:["マウスピース","スライド","ベル","バルブ"], correct:1},
+  {q:"最も一般的な種類は？", a:["アルト","テナー","バス","ソプラノ"], correct:1},
+  {q:"ウォーターキーの目的は？", a:["音量調整","水分を抜く","装飾","チューニング"], correct:1}
+];
+let idx=0, score=0;
+const $=s=>document.querySelector(s), app=$("#app");
+
+function render(){
+  app.innerHTML="";
+  if(idx>=Q.length){ app.innerHTML=`<h2>結果</h2><p>スコア：<strong>${score}/${Q.length}</strong></p>`; return; }
+  const d=document.createElement("div");
+  d.innerHTML=`<h2>Q${idx+1}. ${Q[idx].q}</h2>`;
+  const wrap=document.createElement("div"); wrap.className="choices";
+  Q[idx].a.forEach((t,i)=>{ const b=document.createElement("button"); b.textContent=t;
+    b.onclick=()=>{ if(i===Q[idx].correct) score++; idx++; render(); };
+    wrap.appendChild(b);
+  });
+  d.appendChild(wrap); app.appendChild(d);
+}
+render();
+</script>
+</body>
+</html>
